@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/draw.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.9/dist/shoelace/shoelace.css">
+</head>
+
+<body>
+    <div class='btnWrapper'>
+        <sl-button circle><img src="./img/画笔.png" alt=""></sl-button>
+        <sl-button circle><img src="./img/直线.png" alt=""></sl-button>
+        <sl-button circle><img src="./img/虚线.png" alt=""></sl-button>
+        <sl-button circle><img src="./img/矩形.png" alt=""></sl-button>
+        <sl-button circle><img src="./img/圆圈.png" alt=""></sl-button>
+        <sl-button circle><img src="./img/向上三角形.png" alt=""></sl-button>
+        <sl-button circle><img src="./img/椭圆.png" alt=""></sl-button>
+        <sl-button circle><img src="./img/直角三角形.png" alt=""></sl-button>
+        <sl-tooltip content="添加字体" placement="bottom">
+            <sl-button circle><img src="./img/文.png" alt=""></sl-button>
+        </sl-tooltip>
+        <sl-tooltip content="选中对象进行旋转、移动、缩放操作" placement="bottom">
+            <sl-button type="default" size="small">
+                <sl-icon name="pencil-square"></sl-icon>
+                编辑
+            </sl-button>
+        </sl-tooltip>
+        <sl-tooltip content="选中对象无法旋转、移动、缩放" placement="bottom">
+            <sl-button type="primary" size="small">确定</sl-button>
+        </sl-tooltip>
+        <sl-tooltip content="删除选中对象" placement="bottom">
+            <sl-button type="danger" size="small">删除</sl-button>
+        </sl-tooltip>
+        <!-- 上传图片 -->
+        <sl-button id="upload">上传图片
+            <input type="file" multiple id="upImg" accept="image/*"></input>
+        </sl-button>
+        <sl-button type="warning" class="clear">清空画布</sl-button>
+    </div>
+    <!-- <sl-color-picker value="#1296db" opacity format="hsl"></sl-color-picker> -->
+    <canvas id='canvas'></canvas>
+    <sl-tab-group>
+        <sl-tab slot="nav" panel="general">图样、字体编辑页</sl-tab>
+        <sl-tab slot="nav" panel="custom">图片滤镜编辑页</sl-tab>
+        <sl-tab slot="nav" panel="illustration">说明</sl-tab>
+        <sl-tab slot="nav" panel="display">作品演示</sl-tab>
+        <sl-tab-panel name="general">
+            <div class="imgBox" id='imgContainer'>
+                <img src="" alt="" id='myImg' class='localImg'>
+                <img src="" alt="" id='preImg' title="双击可编辑图片">
+            </div>
+            <div class="drawWrapper">
+
+                <div class="colorPick">
+                    <span>绘制颜色:</span>
+                    <sl-color-picker value="#1296db" opacity format="hex"></sl-color-picker>
+                </div>
+                <div class="colorPick1">
+                    <span>填充颜色:</span>
+                    <sl-color-picker value="#9616ff00" opacity format="hex"></sl-color-picker>
+                </div>
+                <div class="range">
+                    <span>线宽设置:</span>
+                    <sl-range min="1" max="100" step="1" tooltip="bottom"></sl-range>
+                </div>
+                <div class="mode">
+                    <span>涂鸦样式:</span>
+                    <sl-select placeholder="Select one">
+                        <sl-menu-item value="Pencil">Pencil</sl-menu-item>
+                        <sl-menu-item value="Circle">Circle</sl-menu-item>
+                        <sl-menu-item value="Spray">Spray</sl-menu-item>
+                        <sl-menu-item value="Pattern">Pattern</sl-menu-item>
+                    </sl-select>
+                </div>
+                <div class='textStyle'>
+                    <div class='fontFamily'>
+                        <span>字体：</span>
+                        <sl-select id="fFSelect" placeholder="字体" valid pill>
+                            <sl-menu-item value="">默认</sl-menu-item>
+                            <sl-menu-item value="SimSun">宋体</sl-menu-item>
+                            <sl-menu-item value="SimHei">黑体</sl-menu-item>
+                            <sl-menu-item value="KaiTi">楷体</sl-menu-item>
+                            <sl-menu-item value="Lisu">隶书</sl-menu-item>
+                            <sl-menu-item value="STXingkai">华文行楷</sl-menu-item>
+                            <sl-menu-item value="STXihei">华文隶书</sl-menu-item>
+                            <sl-menu-item value="STLiti">华文细黑</sl-menu-item>
+                            <sl-menu-item value="FangSong">仿宋</sl-menu-item>
+                        </sl-select>
+                    </div>
+                    <div class='fontSize'>
+                        <span>字号：</span>
+                        <sl-select placeholder="字号" valid pill small id='fSize'>
+                            <sl-menu-item value="56">初号</sl-menu-item>
+                            <sl-menu-item value="48">小初</sl-menu-item>
+                            <sl-menu-item value="34">一号</sl-menu-item>
+                            <sl-menu-item value="32">小一</sl-menu-item>
+                            <sl-menu-item value="29">二号</sl-menu-item>
+                            <sl-menu-item value="24">小二</sl-menu-item>
+                            <sl-menu-item value="21">三号</sl-menu-item>
+                            <sl-menu-item value="20">小三</sl-menu-item>
+                            <sl-menu-item value="18">四号</sl-menu-item>
+                            <sl-menu-item value="16">小四</sl-menu-item>
+                            <sl-menu-item value="14">五号</sl-menu-item>
+                            <sl-menu-item value="12">小五</sl-menu-item>
+                            <sl-menu-item value="10">六号</sl-menu-item>
+                            <sl-menu-item value="8">小六</sl-menu-item>
+                            <sl-menu-item value="7">七号</sl-menu-item>
+                            <sl-menu-item value="6">八号</sl-menu-item>
+                        </sl-select>
+                        <sl-range min="5" max="100" step="1" value='32' tooltip="bottom" id='fSizeR'></sl-range>
+                        <div class='fontColor'>
+                            <span>字体颜色：</span>
+                            <sl-tooltip content="字体颜色" placement="bottom">
+                                <sl-color-picker id='fColor' value='#880E4F' opacity format="hex"></sl-color-picker>
+                            </sl-tooltip>
+                        </div>
+                        <div class='fontFillColor'>
+                            <span>字体填充颜色：</span>
+                            <sl-tooltip content="字体填充颜色" placement="bottom">
+                                <sl-color-picker id='fFillColor' value='#D81B60' opacity format="hex"></sl-color-picker>
+                            </sl-tooltip>
+                        </div>
+                        <div class='textBackgroundColor'>
+                            <span>文本背景颜色：</span>
+                            <sl-tooltip content="文本背景颜色" placement="bottom">
+                                <sl-color-picker id='textBgColor' value='#9616ff00' opacity format="hex">
+                                </sl-color-picker>
+                            </sl-tooltip>
+                        </div>
+                        <div class='fontStyle'>
+                            <sl-tooltip content="字体加粗" placement="bottom">
+                                <sl-button id='fWeight' type="default" size="small" circle><img src="./img/加粗.svg"
+                                        alt="">
+                                </sl-button>
+                            </sl-tooltip>
+                            <sl-tooltip content="字体斜体" placement="bottom">
+                                <sl-button id='fStyle' type="default" size="small" circle><img src="./img/斜体.svg"
+                                        alt="">
+                                </sl-button>
+                            </sl-tooltip>
+                            <sl-tooltip content="下划线" placement="bottom">
+                                <sl-button id='fUnderLine' type="default" size="small" circle><img src="./img/下划线.svg"
+                                        alt="">
+                                </sl-button>
+                            </sl-tooltip>
+                            <sl-tooltip content="中划线" placement="bottom">
+                                <sl-button id='fLineThrough' type="default" size="small" circle><img src="./img/中划线.svg"
+                                        alt="">
+                                </sl-button>
+                            </sl-tooltip>
+                            <sl-tooltip content="上划线" placement="bottom">
+                                <sl-button id='fOverLine' type="default" size="small" circle><img src="./img/上划线.svg"
+                                        alt="">
+                                </sl-button>
+                            </sl-tooltip>
+                            <sl-tooltip content="上标" placement="bottom">
+                                <sl-button type="default" size="small" circle id='fSup'><img src="./img/上标.svg" alt="">
+                                </sl-button>
+                            </sl-tooltip>
+                            <sl-tooltip content="下标" placement="bottom">
+                                <sl-button type="default" size="small" circle id='fSub'><img src="./img/下标.svg" alt="">
+                                </sl-button>
+                            </sl-tooltip>
+                            <sl-tooltip content="取消上下标" placement="bottom">
+                                <sl-button type="default" size="small" circle id='removeS'><img src="./img/X.svg"
+                                        alt="">
+                                </sl-button>
+                            </sl-tooltip>
+                        </div>
+
+                    </div>
+                </div>
+                <div class='shadow'>
+                    <p>阴影效果:</p>
+                    <span>X :<sl-range id='hShadow' min="-20" max="20" step="1" value='0' tooltip="bottom"></sl-range>
+                    </span>
+                    <span>Y :<sl-range id='vShadow' min="-20" max="20" step="1" value='0' tooltip="bottom"></sl-range>
+                    </span>
+                    <span>blur :<sl-range id='SBlur' min="0" max="20" step="1" value='0' tooltip="bottom"></sl-range>
+                    </span>
+                    <span>颜色 :<sl-color-picker id='shadowColor' value="#888888" opacity format="hex"></sl-color-picker>
+                    </span>
+                </div>
+            </div>
+        </sl-tab-panel>
+        <sl-tab-panel id='photofilter' name="custom">
+            <p>滤镜选择 :</p>
+            <label>
+                <sl-checkbox id='grayscale'>Grayscale（灰度）:</sl-checkbox>
+            </label>
+            <label>
+                <sl-radio name='grayscale' id="average" checked>Avg.</sl-radio>
+                <sl-radio name='grayscale' id="lightness">Lum.</sl-radio>
+                <sl-radio name='grayscale' id="luminosity">Light.</sl-radio>
+            </label><br>
+            <label>
+                <sl-checkbox id="invert">Invert(负片效果)</sl-checkbox>
+            </label>
+            <p>
+                ColorMatrixFilter色彩矩阵滤镜 :
+            </p>
+            <label>
+                <sl-checkbox id="sepia">Sepia(深褐)</sl-checkbox>
+            </label>
+            <label>
+                <sl-checkbox id='blackwhite'>Black/White(黑白)</sl-checkbox>
+            </label>
+            <label>
+                <sl-checkbox id='brownie'>Brownie</sl-checkbox>
+            </label>
+            <label>
+                <sl-checkbox id='vintage'>Vintage</sl-checkbox>
+            </label>
+            <label>
+                <sl-checkbox id='kodachrome'>Kodachrome</sl-checkbox>
+            </label>
+            <label>
+                <sl-checkbox id='technicolor'>Technicolor</sl-checkbox>
+            </label>
+            <label>
+                <sl-checkbox id='polaroid'>Polaroid</sl-checkbox>
+            </label>
+            <label>
+                <sl-checkbox id='remove-color'><b>Remove color :</b></sl-checkbox>
+                <sl-color-picker id='remove-color-color' class="removeColorPick" size="small" value='green'>
+                </sl-color-picker>
+                <span>Distance:</span>
+                <sl-range id="remove-color-distance" value="0.02" min="0" max="1" step="0.01"></sl-range>
+            </label>
+            <label>
+                <sl-checkbox id='brightness'><b>Brightness(亮度):</b></sl-checkbox>
+                <sl-range id="brightness-value" value="0.1" min="-1" max="1" step="0.003921"></sl-range>
+            </label><br>
+            <label>
+                <sl-checkbox id="gamma"><b>Gamma(伽马特效调整) :</b></sl-checkbox><br>
+                Red:
+                <sl-range class='gamma-color' id="gamma-red" value="1" min="0.2" max="2.2" step="0.003921"></sl-range>
+                Green:
+                <sl-range class='gamma-color' id="gamma-green" value="1" min="0.2" max="2.2" step="0.003921"></sl-range>
+                Blue:
+                <sl-range class='gamma-color' id="gamma-blue" value="1" min="0.2" max="2.2" step="0.003921"></sl-range>
+            </label>
+            <label>
+                <sl-checkbox id='contrast'><b>Contrast(对比度) :</b></sl-checkbox>
+                <sl-range class='filterValue' id="contrast-value" value="0" min="-1" max="1" step="0.003921"></sl-range>
+            </label><br>
+            <label>
+                <sl-checkbox id='saturation'><b>Saturation(饱和度):</b></sl-checkbox>
+                <sl-range class='filterValue' id="saturation-value" value="0" min="-1" max="1" step="0.003921">
+                </sl-range>
+            </label><br>
+            <label>
+                <sl-checkbox id='hue'><b>Hue(色调):</b></sl-checkbox>
+                <sl-range class='filterValue' id="hue-value" value="0" min="-2" max="2" step="0.002"></sl-range>
+            </label>
+            <label>
+                <sl-checkbox id='noise'><b>Noise(噪点):</b></sl-checkbox>
+                <sl-range class='filterValue' id="noise-value" value="100" min="0" max="1000" step="10"></sl-range>
+            </label><br>
+            <label>
+                <sl-checkbox id='pixelate'><b>Pixelate(像素化) :</b></sl-checkbox>
+                <sl-range class='filterValue' id="pixelate-value" value="4" min="2" max="20" step="0.1">
+                </sl-range>
+            </label><br>
+            <label>
+                <sl-checkbox id='blur'><b>Blur(模糊) :</b></sl-checkbox>
+                <sl-range class='filterValue' id="blur-value" value="0.1" min="0" max="1" step="0.01"></sl-range>
+            </label>&nbsp;&nbsp;&nbsp;
+            <label>
+                <sl-tooltip content="锐化" placement="top" style="display: inline-block;">
+                    <sl-checkbox id="sharpen">Sharpen</sl-checkbox>
+                </sl-tooltip>
+            </label>
+            <label>
+                <sl-tooltip content="浮雕化" placement="top" style="display: inline-block;">
+                    <sl-checkbox id="emboss">Emboss</sl-checkbox>
+                </sl-tooltip>
+            </label><br>
+            <label>
+                <sl-tooltip content="混合颜色" placement="top" style="display: inline-block;">
+                    <sl-checkbox id='blend'><b>Blend Color :</b></sl-checkbox>
+                </sl-tooltip>
+                <sl-tooltip content="模式选择" placement="top" style="display: inline-block;">
+                    <sl-select id="blend-mode" class='modeSelct' label="Mode :" pill>
+                        <sl-menu-item selected value="add">Add</sl-menu-item>
+                        <sl-menu-item value="diff">Diff</sl-menu-item>
+                        <sl-menu-item value="subtract">Subtract</sl-menu-item>
+                        <sl-menu-item value="multiply">Multiply</sl-menu-item>
+                        <sl-menu-item value="screen">Screen</sl-menu-item>
+                        <sl-menu-item value="lighten">Lighten</sl-menu-item>
+                        <sl-menu-item value="darken">Darken</sl-menu-item>
+                        <sl-menu-item value="overlay">Overlay</sl-menu-item>
+                        <sl-menu-item value="exclusion">Exclusion</sl-menu-item>
+                        <sl-menu-item value="tint">Tint</sl-menu-item>
+                    </sl-select>
+                </sl-tooltip>
+                <div class='AlphaValue'>
+                    <label>Alpha :</label>
+                    <sl-range class='AlphaRange' id="blend-alpha" value="1" min="0" max="1" step="0.01">
+                    </sl-range>
+                </div>
+                <div class='ColorValue'>
+                    <label>Color :</label>
+                    <sl-color-picker id="blend-color" size="small" value='green'></sl-color-picker>
+                    </sl-range>
+                </div>
+            </label><br>
+            <label>
+                <sl-tooltip content="混合图片" placement="top" style="display: inline-block;">
+                    <sl-checkbox id='blend-image'><b>Blend Image :</b></sl-checkbox>
+                </sl-tooltip>
+                <sl-tooltip content="模式选择" placement="top" style="display: inline-block;">
+                    <sl-select id="blend-image-mode" class='modeSelct' label="Mode :" pill>
+                        <sl-menu-item selected value="multiply">Multiply</sl-menu-item>
+                        <sl-menu-item value="mask">Mask</sl-menu-item>
+                    </sl-select>
+                </sl-tooltip>
+                <div class='AlphaValue'>
+                    <label>Alpha :</label>
+                    <sl-range class='AlphaRange' id="blend-image-alpha" value="1" min="0" max="1" step="0.01">
+                    </sl-range>
+                </div>
+            </label>
+
+        </sl-tab-panel>
+        <sl-tab-panel name="illustration"></sl-tab-panel>
+        <sl-tab-panel name="display"></sl-tab-panel>
+    </sl-tab-group>
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.9/dist/shoelace/shoelace.esm.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/fabric.js/4.0.0-beta.12/fabric.min.js"></script>
+    <script src="./JS/draw.js"></script>
+</body>
+
+</html>

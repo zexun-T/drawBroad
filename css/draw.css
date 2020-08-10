@@ -1,0 +1,244 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html,body{
+    width: 100%;
+    height: 100%;
+    background-color: #ccc;
+}
+.btnWrapper{
+    z-index: 999;
+    position:fixed;
+}
+#canvas{
+    position: relative;
+    width: 80%;
+    height: 80%;
+    background-color: #fff;
+}
+.canvas-container {
+    width: 80% !important;
+    height: 80% !important;
+    position: relative !important;
+    top: 40px;
+}
+.upper-canvas.pen{
+    cursor: url('../img/画笔.png')10 25, auto !important;
+}
+.upper-canvas.eraser{
+    cursor: url('../img/橡皮擦.png')10 25,auto !important;
+}
+.upper-canvas.linepen{
+    cursor: url('../img/直线画笔.png')3 28,auto !important;
+}
+sl-tab-group{
+    position: absolute;
+    width: 500px;
+    height: 410px;
+    top: 1px;
+    left: 1010px;
+    background-color: #fff;
+}
+.drawWrapper{
+    position: absolute;
+}
+.textBtn{
+    display: none;
+}
+.textBtn.active{
+    display: inline;
+}
+.colorPick{
+    position: absolute;
+    width: 150px;
+    /* left:1020px; */
+    /* top:40px; */
+}
+.colorPick span{
+    position: relative;
+    top:-10px;
+    left: -5px;
+}
+.colorPick1{
+    position: absolute;
+    width: 150px;
+    /* left:1020px; */
+    top:60px;
+}
+.colorPick1 span{
+    position: relative;
+    top:-10px;
+    left: -5px;
+}
+.mode{
+    width: 180px;
+    position: absolute;
+    left: -5px;
+    top:210px;
+}
+.mode sl-select{
+    margin-top: 10px;
+    
+    width: 120px;
+    display: inline-block;
+}
+.range{
+    position: absolute;
+    width: 150px;
+    left: -5px;
+    top:130px;
+}
+.shadow{
+    position: absolute;
+    width: 310px;
+    left:180px;
+    top:220px;
+}
+
+.shadow sl-range{
+    margin-left: 5px;
+    display: inline-block;
+    width: 120px;
+}
+.shadow sl-color-picker{
+    position: absolute;
+    left: 220px;
+    top: 58px;
+}
+.shadow span:nth-child(3) {
+    margin-left: 3px;
+}
+.textStyle{
+    width: 310px;
+    border: 1px solid #ccc;
+    position: absolute;
+    left:168px;
+    top:-20px;
+}
+.fontFamily{
+    display: inline-block;
+}
+.fontFamily sl-select{
+    width: 120px;
+    display: inline-block;
+}
+.fontSize{
+    margin-top:10px;
+}
+.fontSize sl-select{
+    width: 90px;
+    display: inline-block;
+}
+.fontSize sl-range{
+    margin-left: 10px;
+    width: 130px;
+    display: inline-block;
+}
+.fontStyle{
+    margin-top: 10px;
+}
+.fontColor{
+    display: inline-block;
+    margin-bottom: 13px;
+}
+.fontFillColor{
+    display: inline-block;
+    margin-left: 10px;
+    margin-bottom: 13px;
+}
+.textBackgroundColor span{
+    position: relative;
+    top:-10px;
+}
+.fontColor sl-color-picker{
+    position: relative;
+    left:-2px;
+    top: 12px;
+}
+.fontFillColor sl-color-picker{
+    position: relative;
+    left:-2px;
+    top: 12px;
+}
+.clear{
+    /* position: absolute; */
+    margin-left: 100px;
+}
+#upload{
+    margin-left: 10px;
+    /* position: relative; */
+    text-decoration: none;
+    cursor: pointer;
+}
+#upImg{
+    width: 100% ;
+    height: 100% ;
+    position: absolute;
+    overflow: hidden;
+    right: 0;
+    top: 0;
+    opacity:0;
+    cursor: pointer;
+}
+.imgBox{
+    position: absolute;
+    top:370px;
+    left: -1px;
+    width: 500px;
+    height: 340px;
+    border:1px solid black
+}
+.localImg{
+    display: none;
+}
+#preImg{
+    width: 100%;
+    height: 100%;
+}
+#photofilter{
+    height: 720px;
+    background-color: #fff;
+}
+sl-checkbox{
+    margin: 6px;
+}
+.removeColorPick{
+    position: relative;
+    top: 6px;
+}
+#remove-color-distance{
+    display: inline-block;
+    width: 90px;
+}
+#brightness-value{
+    display: inline-block;
+    width: 90px;
+}
+.gamma-color{
+    display: inline-block;
+    width: 100px;
+}
+.filterValue{
+    display: inline-block;
+    width: 100px;
+}
+.modeSelct{
+    display: inline-block;
+    width: 130px;
+}
+.AlphaValue{
+    display: inline-block;
+}
+.AlphaRange{
+    width: 100px;
+}
+.ColorValue{
+    display: inline-block;
+}
+#blend-color{
+    display: block;
+    position: relative;
+    top: 6px;
+    left: 30px;
+}
